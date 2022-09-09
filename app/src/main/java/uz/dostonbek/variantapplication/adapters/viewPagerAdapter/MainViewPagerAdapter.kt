@@ -6,10 +6,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import uz.dostonbek.variantapplication.ui.mainView.view.chat.ChatListFragment
 import uz.dostonbek.variantapplication.ui.mainView.view.settings.SettingsFragment
 import uz.dostonbek.variantapplication.ui.mainView.view.statement.StateMentFragment
-import uz.gxteam.variant.utils.AppConstant.ONE
-import uz.gxteam.variant.utils.AppConstant.THREE
-import uz.gxteam.variant.utils.AppConstant.TWO
-import uz.gxteam.variant.utils.AppConstant.ZERO
+import uz.dostonbek.variantapplication.utils.AppConstant.ONE
+import uz.dostonbek.variantapplication.utils.AppConstant.THREE
+import uz.dostonbek.variantapplication.utils.AppConstant.TWO
+import uz.dostonbek.variantapplication.utils.AppConstant.ZERO
 
 class MainViewPagerAdapter(fragmentActivity: FragmentActivity):FragmentStateAdapter(fragmentActivity) {
     override fun getItemCount(): Int {

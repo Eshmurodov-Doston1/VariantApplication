@@ -32,20 +32,20 @@ import uz.dostonbek.variantapplication.vm.statementVm.StatementVm
 import uz.dostonbek.variantapplication.adapters.chatListAdapter.chat.ChatAdapter
 
 import uz.dostonbek.variantapplication.ui.baseFragment.BaseFragment
-import uz.gxteam.variant.utils.AppConstant.AUTH_WST
-import uz.gxteam.variant.utils.AppConstant.CHAT_MEW_MESSAGE
-import uz.gxteam.variant.utils.AppConstant.CLOSE_WST_TEXT
-import uz.gxteam.variant.utils.AppConstant.DATAAPPLICATION
-import uz.gxteam.variant.utils.AppConstant.MINUS_ONE
-import uz.gxteam.variant.utils.AppConstant.MINUS_TWO
-import uz.gxteam.variant.utils.AppConstant.ONE
-import uz.gxteam.variant.utils.AppConstant.PUSHER_WST
-import uz.gxteam.variant.utils.AppConstant.SUBSCRIBE_WST
-import uz.gxteam.variant.utils.AppConstant.WEBSOCKET_URL
-import uz.gxteam.variant.utils.AppConstant.WST_CHANNEL
-import uz.gxteam.variant.utils.AppConstant.WST_DATA
-import uz.gxteam.variant.utils.AppConstant.WST_EVENT
-import uz.gxteam.variant.utils.AppConstant.ZERO
+import uz.dostonbek.variantapplication.utils.AppConstant.AUTH_WST
+import uz.dostonbek.variantapplication.utils.AppConstant.CHAT_MEW_MESSAGE
+import uz.dostonbek.variantapplication.utils.AppConstant.CLOSE_WST_TEXT
+import uz.dostonbek.variantapplication.utils.AppConstant.DATAAPPLICATION
+import uz.dostonbek.variantapplication.utils.AppConstant.MINUS_ONE
+import uz.dostonbek.variantapplication.utils.AppConstant.MINUS_TWO
+import uz.dostonbek.variantapplication.utils.AppConstant.ONE
+import uz.dostonbek.variantapplication.utils.AppConstant.PUSHER_WST
+import uz.dostonbek.variantapplication.utils.AppConstant.SUBSCRIBE_WST
+import uz.dostonbek.variantapplication.utils.AppConstant.WEBSOCKET_URL
+import uz.dostonbek.variantapplication.utils.AppConstant.WST_CHANNEL
+import uz.dostonbek.variantapplication.utils.AppConstant.WST_DATA
+import uz.dostonbek.variantapplication.utils.AppConstant.WST_EVENT
+import uz.dostonbek.variantapplication.utils.AppConstant.ZERO
 import uz.dostonbek.variantapplication.utils.fetchResult
 
 import uz.dostonbek.variantapplication.workManager.NotificationWork

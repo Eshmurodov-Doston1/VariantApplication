@@ -1,5 +1,6 @@
 package uz.dostonbek.variantapplication.vm.statementVm
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +21,7 @@ import uz.dostonbek.variantapplication.resourse.ResponseState
 import uz.dostonbek.variantapplication.socket.SendSocketData
 import uz.dostonbek.variantapplication.socket.resSocet.ResSocket
 import uz.gxteam.variant.interceptor.MySharedPreference
-import uz.gxteam.variant.utils.AppConstant.NO_INTERNET
+import uz.dostonbek.variantapplication.utils.AppConstant.NO_INTERNET
 import uz.gxteam.variant.utils.NetworkHelper
 import javax.inject.Inject
 

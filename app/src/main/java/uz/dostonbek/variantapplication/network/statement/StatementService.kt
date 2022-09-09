@@ -1,6 +1,5 @@
 package uz.dostonbek.variantapplication.network.statement
 
-import android.app.Application
 import retrofit2.Response
 import retrofit2.http.*
 import uz.dostonbek.variantapplication.models.getApplication.reqApplication.SendToken
@@ -13,11 +12,10 @@ import uz.dostonbek.variantapplication.models.uploaCategory.UploadCategory
 import uz.dostonbek.variantapplication.models.uploadPhotos.UploadPhotoData
 import uz.dostonbek.variantapplication.socket.SendSocketData
 import uz.dostonbek.variantapplication.socket.resSocet.ResSocket
-import uz.gxteam.variant.utils.AppConstant.ACCEPT
-import uz.gxteam.variant.utils.AppConstant.AUTH_STR
-import uz.gxteam.variant.utils.AppConstant.HEADER_CONTENT
-import uz.gxteam.variant.utils.AppConstant.TOKENTYPE
-import uz.gxteam.variant.utils.AppConstant.TYPETOKEN
+import uz.dostonbek.variantapplication.utils.AppConstant.ACCEPT
+import uz.dostonbek.variantapplication.utils.AppConstant.AUTH_STR
+import uz.dostonbek.variantapplication.utils.AppConstant.HEADER_CONTENT
+import uz.dostonbek.variantapplication.utils.AppConstant.TYPETOKEN
 
 interface StatementService {
     @POST("/api/chat/get/applications")

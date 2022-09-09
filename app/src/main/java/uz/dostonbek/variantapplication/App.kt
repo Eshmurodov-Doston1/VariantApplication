@@ -10,7 +10,7 @@ import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import net.gotev.uploadservice.BuildConfig
 import net.gotev.uploadservice.UploadServiceConfig
-import uz.gxteam.variant.utils.AppConstant.TESTCHANNEL
+import uz.dostonbek.variantapplication.utils.AppConstant.TESTCHANNEL
 import javax.inject.Inject
 
 @HiltAndroidApp

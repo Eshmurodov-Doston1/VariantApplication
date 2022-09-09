@@ -113,4 +113,6 @@ dependencies {
     implementation 'com.daimajia.androidanimations:library:2.4@aar'
     //toasty
     implementation 'com.github.GrenderG:Toasty:1.5.2'
+    //lock View
+    implementation 'io.github.itsxtt:pattern-lock:0.2.0'
 }

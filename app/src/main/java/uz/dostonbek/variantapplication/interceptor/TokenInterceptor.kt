@@ -1,7 +1,6 @@
 package uz.dostonbek.variantapplication.interceptor
 
 import android.content.Context
-import android.util.Log
 import com.google.common.net.HttpHeaders
 import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -10,13 +9,12 @@ import org.json.JSONObject
 import uz.dostonbek.variantapplication.BuildConfig
 import uz.dostonbek.variantapplication.models.auth.resAuth.ResAuth
 import uz.gxteam.variant.interceptor.MySharedPreference
-import uz.gxteam.variant.utils.AppConstant.ACCEPT
-import uz.gxteam.variant.utils.AppConstant.AUTH_STR
-import uz.gxteam.variant.utils.AppConstant.EMPTYTEXT
-import uz.gxteam.variant.utils.AppConstant.REFRESHTOKENT_STR
-import uz.gxteam.variant.utils.AppConstant.REFRESHTOKEN_ADD_URL
-import uz.gxteam.variant.utils.AppConstant.SUCCESS_CODE
-import uz.gxteam.variant.utils.AppConstant.TYPETOKEN
+import uz.dostonbek.variantapplication.utils.AppConstant.ACCEPT
+import uz.dostonbek.variantapplication.utils.AppConstant.EMPTYTEXT
+import uz.dostonbek.variantapplication.utils.AppConstant.REFRESHTOKENT_STR
+import uz.dostonbek.variantapplication.utils.AppConstant.REFRESHTOKEN_ADD_URL
+import uz.dostonbek.variantapplication.utils.AppConstant.SUCCESS_CODE
+import uz.dostonbek.variantapplication.utils.AppConstant.TYPETOKEN
 import javax.inject.Inject
 
 /** TokentInternceptor this is class if responce code 401 refresh token send api

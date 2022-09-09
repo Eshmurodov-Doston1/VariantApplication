@@ -9,9 +9,9 @@ import uz.dostonbek.variantapplication.R
 import uz.dostonbek.variantapplication.databinding.FragmentMainBinding
 import uz.dostonbek.variantapplication.adapters.viewPagerAdapter.MainViewPagerAdapter
 import uz.dostonbek.variantapplication.ui.baseFragment.BaseFragment
-import uz.gxteam.variant.utils.AppConstant.ONE
-import uz.gxteam.variant.utils.AppConstant.TWO
-import uz.gxteam.variant.utils.AppConstant.ZERO
+import uz.dostonbek.variantapplication.utils.AppConstant.ONE
+import uz.dostonbek.variantapplication.utils.AppConstant.TWO
+import uz.dostonbek.variantapplication.utils.AppConstant.ZERO
 
 @AndroidEntryPoint
 class MainFragment : BaseFragment(R.layout.fragment_main) {

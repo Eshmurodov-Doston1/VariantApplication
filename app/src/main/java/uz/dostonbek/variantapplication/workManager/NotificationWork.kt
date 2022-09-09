@@ -23,7 +23,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.WebSocket
 import okio.ByteString
-import uz.dostonbek.variantapplication.MainActivity
+import uz.dostonbek.variantapplication.activitys.MainActivity
 import uz.dostonbek.variantapplication.R
 import uz.dostonbek.variantapplication.repository.stateMent.StateMentRepository
 import uz.dostonbek.variantapplication.resourse.ResponseState
@@ -32,16 +32,16 @@ import uz.dostonbek.variantapplication.socket.connectSocket.ConnectSocket
 import uz.dostonbek.variantapplication.socket.dataSocket.DataSocket
 import uz.dostonbek.variantapplication.socket.socketMessage.SocketMessage
 import uz.gxteam.variant.interceptor.MySharedPreference
-import uz.gxteam.variant.utils.AppConstant.AUTH_WST
-import uz.gxteam.variant.utils.AppConstant.CHAT_MEW_MESSAGE
-import uz.gxteam.variant.utils.AppConstant.COMPANYNAME
-import uz.gxteam.variant.utils.AppConstant.EMPTYTEXT
-import uz.gxteam.variant.utils.AppConstant.PUSHER_WST
-import uz.gxteam.variant.utils.AppConstant.SUBSCRIBE_WST
-import uz.gxteam.variant.utils.AppConstant.WEBSOCKET_URL
-import uz.gxteam.variant.utils.AppConstant.WST_CHANNEL
-import uz.gxteam.variant.utils.AppConstant.WST_DATA
-import uz.gxteam.variant.utils.AppConstant.WST_EVENT
+import uz.dostonbek.variantapplication.utils.AppConstant.AUTH_WST
+import uz.dostonbek.variantapplication.utils.AppConstant.CHAT_MEW_MESSAGE
+import uz.dostonbek.variantapplication.utils.AppConstant.COMPANYNAME
+import uz.dostonbek.variantapplication.utils.AppConstant.EMPTYTEXT
+import uz.dostonbek.variantapplication.utils.AppConstant.PUSHER_WST
+import uz.dostonbek.variantapplication.utils.AppConstant.SUBSCRIBE_WST
+import uz.dostonbek.variantapplication.utils.AppConstant.WEBSOCKET_URL
+import uz.dostonbek.variantapplication.utils.AppConstant.WST_CHANNEL
+import uz.dostonbek.variantapplication.utils.AppConstant.WST_DATA
+import uz.dostonbek.variantapplication.utils.AppConstant.WST_EVENT
 
 
 @HiltWorker

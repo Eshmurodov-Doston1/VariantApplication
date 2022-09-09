@@ -3,17 +3,17 @@ package uz.gxteam.variant.interceptor
 import android.content.Context
 import android.content.SharedPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
-import uz.gxteam.variant.utils.AppConstant.ACCESSTOKEN
-import uz.gxteam.variant.utils.AppConstant.COMPANYNAME
-import uz.gxteam.variant.utils.AppConstant.EMPTYTEXT
-import uz.gxteam.variant.utils.AppConstant.LANGUAGE
-import uz.gxteam.variant.utils.AppConstant.OLDTOKEN
-import uz.gxteam.variant.utils.AppConstant.PASSWORDAPP
-import uz.gxteam.variant.utils.AppConstant.REFRESHTOKEN
-import uz.gxteam.variant.utils.AppConstant.THEME
-import uz.gxteam.variant.utils.AppConstant.THEMECOLOR
-import uz.gxteam.variant.utils.AppConstant.TOKENTYPE
-import uz.gxteam.variant.utils.AppConstant.USERDATA
+import uz.dostonbek.variantapplication.utils.AppConstant.ACCESSTOKEN
+import uz.dostonbek.variantapplication.utils.AppConstant.COMPANYNAME
+import uz.dostonbek.variantapplication.utils.AppConstant.EMPTYTEXT
+import uz.dostonbek.variantapplication.utils.AppConstant.LANGUAGE
+import uz.dostonbek.variantapplication.utils.AppConstant.OLDTOKEN
+import uz.dostonbek.variantapplication.utils.AppConstant.PASSWORDAPP
+import uz.dostonbek.variantapplication.utils.AppConstant.REFRESHTOKEN
+import uz.dostonbek.variantapplication.utils.AppConstant.THEME
+import uz.dostonbek.variantapplication.utils.AppConstant.THEMECOLOR
+import uz.dostonbek.variantapplication.utils.AppConstant.TOKENTYPE
+import uz.dostonbek.variantapplication.utils.AppConstant.USERDATA
 import javax.inject.Inject
 
 /** this is class SharedPreference create and save storage data accessToken and refreshToken and token type **/

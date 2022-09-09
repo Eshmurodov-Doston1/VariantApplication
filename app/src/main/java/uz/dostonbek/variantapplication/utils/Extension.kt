@@ -1,5 +1,8 @@
 package uz.dostonbek.variantapplication.utils
 
+import android.app.Activity
+import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -8,14 +11,14 @@ import com.google.gson.GsonBuilder
 import kotlinx.coroutines.flow.StateFlow
 import uz.dostonbek.variantapplication.resourse.ResponseState
 import uz.dostonbek.variantapplication.utils.uiController.UiController
-import uz.gxteam.variant.utils.AppConstant.ZERO
+import uz.dostonbek.variantapplication.utils.AppConstant.ZERO
 
 suspend inline fun <reified T> StateFlow<ResponseState<T>>.fetchResult(
     uiController: UiController,
     crossinline invokeSuccess: (T) -> Unit,
     noinline onClick:(isClick:Boolean)->Unit
 ) {
-    var count = ZERO
+    var count = -1
     this.collect { result ->
         when (result) {
             is ResponseState.Loading -> {
@@ -28,9 +31,10 @@ suspend inline fun <reified T> StateFlow<ResponseState<T>>.fetchResult(
             }
             is ResponseState.Error -> {
                 uiController.hideProgress()
-                if (count == ZERO){
+                Log.e("Error", result.errorMessage.toString())
+                count++
+                if (count == 0){
                     uiController.error(result.errorCode?.toLong()?:0L, result.errorMessage.toString(),onClick)
-                    count++
                 }
             }
         }
@@ -70,4 +74,11 @@ fun Button.enabledFalse(){
 }
 fun TextView.textApp(str:String){
     this.text = str
+}
+
+fun <A: Activity> Activity.startNewActivity(activity: Class<A>){
+    Intent(this,activity).also {
+        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK.or(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(it)
+    }
 }

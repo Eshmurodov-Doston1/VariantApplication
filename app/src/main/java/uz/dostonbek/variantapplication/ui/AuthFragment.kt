@@ -12,7 +12,7 @@ import uz.dostonbek.variantapplication.R
 import uz.dostonbek.variantapplication.databinding.FragmentAuthBinding
 import uz.dostonbek.variantapplication.models.auth.reqAuth.ReqAuth
 import uz.dostonbek.variantapplication.ui.baseFragment.BaseFragment
-import uz.gxteam.variant.utils.AppConstant.PHONE_UZB
+import uz.dostonbek.variantapplication.utils.AppConstant.PHONE_UZB
 import uz.dostonbek.variantapplication.utils.fetchResult
 import uz.dostonbek.variantapplication.vm.authViewModel.AuthViewModel
 
@@ -24,7 +24,7 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             if (!authViewModel.getSharedPreference().accessToken.equals("") && authViewModel.getSharedPreference().accessToken!=null){
-               findNavController().navigate(R.id.action_authFragment_to_lockFragment)
+              compositionRootAuth.screenNavigate.createLockView()
             }
             phoneNumber.requestFocus()
 
@@ -49,10 +49,10 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
                 } else if (phoneNumber.isNotEmpty() && password.isNotEmpty()){
                     authViewModel.authApp(ReqAuth(password,phoneNumber))
                         launch {
-                            authViewModel.authVariant.fetchResult(compositionRoot.uiControllerApp, { result->
-                                    compositionRoot.mySharedPreferencesApp.accessToken = result?.access_token
-                                    compositionRoot.mySharedPreferencesApp.refreshToken = result?.refresh_token
-                                    compositionRoot.mySharedPreferencesApp.tokenType = result?.token_type
+                            authViewModel.authVariant.fetchResult(compositionRootAuth.uiControllerApp, { result->
+                                    compositionRootAuth.mySharedPreferencesApp.accessToken = result?.access_token
+                                    compositionRootAuth.mySharedPreferencesApp.refreshToken = result?.refresh_token
+                                    compositionRootAuth.mySharedPreferencesApp.tokenType = result?.token_type
                                     findNavController().navigate(R.id.lockFragment)
                                 },{isClick ->  })
                             }

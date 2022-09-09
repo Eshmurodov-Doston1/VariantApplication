@@ -5,13 +5,17 @@ import androidx.fragment.app.Fragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import uz.dostonbek.variantapplication.ListenerActivity
-import uz.dostonbek.variantapplication.MainActivity
+import uz.dostonbek.variantapplication.activitys.AuthActivity
+import uz.dostonbek.variantapplication.activitys.MainActivity
 import uz.dostonbek.variantapplication.utils.container.AppCompositionRoot
 import kotlin.coroutines.CoroutineContext
 
 abstract class BaseFragment(layout_id:Int) : Fragment(layout_id),CoroutineScope {
     lateinit var listenerActivity: ListenerActivity
+    val compositionRootAuth: AppCompositionRoot get() = (activity as AuthActivity).appCompositionRoot
     val compositionRoot: AppCompositionRoot get() = (activity as MainActivity).appCompositionRoot
+
+
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main.immediate
 

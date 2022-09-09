@@ -1,4 +1,4 @@
-package uz.gxteam.variant.utils
+package uz.dostonbek.variantapplication.utils
 
 object AppConstant {
     const val WEBSOCKET_URL = "wss://socket.variantgroup.uz/app/mykey?protocol=7&client=js&version=7.0.3&flash=false"

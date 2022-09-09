@@ -5,7 +5,7 @@ import java.io.Serializable
 
 data class DataApplication(
     @SerializedName("id")
-    val id:Int?=null,
+    val id:Int,
     @SerializedName("status")
     val status: Int?=null,
     @SerializedName("level")

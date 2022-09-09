@@ -12,10 +12,12 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import uz.dostonbek.variantapplication.R
+import uz.dostonbek.variantapplication.activitys.AuthActivity
 import uz.dostonbek.variantapplication.databinding.FragmentSettingsBinding
 import uz.dostonbek.variantapplication.databinding.LogOutBinding
 import uz.dostonbek.variantapplication.ui.baseFragment.BaseFragment
 import uz.dostonbek.variantapplication.utils.fetchResult
+import uz.dostonbek.variantapplication.utils.startNewActivity
 import uz.dostonbek.variantapplication.vm.authViewModel.AuthViewModel
 
 @AndroidEntryPoint
@@ -51,9 +53,8 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                     launch {
                         authViewModel.logOut.fetchResult(compositionRoot.uiControllerApp,{ result->
                             authViewModel.getSharedPreference().clear()
-                            var navOpitions = NavOptions.Builder().setPopUpTo(R.id.authFragment,false).build()
-                            var bundle = Bundle()
-                            findNavController().navigate(R.id.authFragment,bundle,navOpitions)
+                           activity?.startNewActivity(AuthActivity::class.java)
+                            activity?.finish()
                             create.dismiss()
                         },{isClick ->  })
                     }

@@ -14,7 +14,7 @@ import uz.dostonbek.variantapplication.models.userData.UserData
 import uz.dostonbek.variantapplication.repository.authRepository.AuhtRepository
 import uz.dostonbek.variantapplication.resourse.ResponseState
 import uz.gxteam.variant.interceptor.MySharedPreference
-import uz.gxteam.variant.utils.AppConstant.NO_INTERNET
+import uz.dostonbek.variantapplication.utils.AppConstant.NO_INTERNET
 import uz.gxteam.variant.utils.NetworkHelper
 import javax.inject.Inject
 
@@ -39,13 +39,10 @@ class AuthViewModel @Inject constructor(
 
 
     fun authApp(reqAuth: ReqAuth) = viewModelScope.launch {
-        Log.e("ResponseData", "Loading.....")
             if (networkHelper.isNetworkConnected()){
                 _authVariant.emit(ResponseState.Loading)
-                Log.e("ResponseData", "Loading.....")
                 try {
                     authRepository.authVariant(reqAuth).collect { response->
-                        Log.e("ResponseData", response.toString())
                         _authVariant.emit(response)
                     }
                 }catch (e:Exception){
@@ -62,6 +59,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun getUserData() = viewModelScope.launch {
+        Log.e("GetUser", "UserData")
             if (networkHelper.isNetworkConnected()){
                 try {
                   authRepository.userData("${mySharedPreference.tokenType} ${mySharedPreference.accessToken}")
@@ -69,8 +67,6 @@ class AuthViewModel @Inject constructor(
                 }catch (e:Exception){
                     _userData.emit(ResponseState.Error(e.hashCode(),e.message))
                 }
-
-
             }else{
                 _userData.emit(ResponseState.Error(NO_INTERNET))
             }

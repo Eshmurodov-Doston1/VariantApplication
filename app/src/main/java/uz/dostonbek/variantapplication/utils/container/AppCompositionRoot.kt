@@ -16,7 +16,8 @@ import androidx.navigation.NavController
 import com.google.gson.Gson
 import uz.dostonbek.variantapplication.R
 import uz.dostonbek.variantapplication.databinding.LoadingViewBinding
-import uz.gxteam.variant.utils.AppConstant
+import uz.dostonbek.variantapplication.utils.AppConstant
+import uz.dostonbek.variantapplication.utils.ScreenNavigate
 import uz.dostonbek.variantapplication.utils.uiController.UiController
 import uz.gxteam.variant.interceptor.MySharedPreference
 
@@ -32,7 +33,9 @@ class AppCompositionRoot(
     private val dialogHelper: DialogHelper by lazy {
         DialogHelper(mContext,mLayoutInflater,activity,navController)
     }
-
+    val screenNavigate by lazy {
+        ScreenNavigate(navController)
+    }
     val mLifecycleOwner: LifecycleOwner get() = activity
     val mContext: Context get() = activity
     val mNavController: NavController get() = navController
@@ -56,6 +59,10 @@ class AppCompositionRoot(
     }
 
 
+
+    fun dialogPassword(onClick:(isClick:Boolean)->Unit){
+        dialogHelper.dialogHelperPassword(onClick)
+    }
 
 
     fun createSettings(){
@@ -102,7 +109,7 @@ class AppCompositionRoot(
     }
 
 
-    val alertDialog = AlertDialog.Builder(activity)
+    private val alertDialog = AlertDialog.Builder(activity)
     val create = alertDialog.create()
     fun loadingView(isLoading:Boolean){
       try {

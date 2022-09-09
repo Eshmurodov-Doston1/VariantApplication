@@ -15,7 +15,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.*
 import okio.ByteString
-import uz.dostonbek.variantapplication.MainActivity
+import uz.dostonbek.variantapplication.activitys.MainActivity
 import uz.dostonbek.variantapplication.R
 import uz.dostonbek.variantapplication.repository.stateMent.StateMentRepository
 import uz.dostonbek.variantapplication.resourse.ResponseState
@@ -24,11 +24,11 @@ import uz.dostonbek.variantapplication.socket.connectSocket.ConnectSocket
 import uz.dostonbek.variantapplication.socket.dataSocket.DataSocket
 import uz.dostonbek.variantapplication.socket.socketMessage.SocketMessage
 import uz.gxteam.variant.interceptor.MySharedPreference
-import uz.gxteam.variant.utils.AppConstant
-import uz.gxteam.variant.utils.AppConstant.CHANNEL_ID
-import uz.gxteam.variant.utils.AppConstant.FOREGROUND_CODE
-import uz.gxteam.variant.utils.AppConstant.ONE
-import uz.gxteam.variant.utils.AppConstant.ZERO
+import uz.dostonbek.variantapplication.utils.AppConstant
+import uz.dostonbek.variantapplication.utils.AppConstant.CHANNEL_ID
+import uz.dostonbek.variantapplication.utils.AppConstant.FOREGROUND_CODE
+import uz.dostonbek.variantapplication.utils.AppConstant.ONE
+import uz.dostonbek.variantapplication.utils.AppConstant.ZERO
 import javax.inject.Inject
 
 @AndroidEntryPoint

@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
+import com.google.common.net.HttpHeaders
 import com.google.gson.Gson
 import com.permissionx.guolindev.PermissionX
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,21 +48,21 @@ import uz.dostonbek.variantapplication.models.uploaCategory.UploadCategoryItem
 import uz.dostonbek.variantapplication.models.uploadPhotos.UploadPhotos
 import uz.dostonbek.variantapplication.adapters.category_adapter.CategoryAdapter
 import uz.dostonbek.variantapplication.adapters.imageViewPagerAdapter.ViewPagerAdapter
-import uz.gxteam.variant.errors.uploadError.ErrorUpload
+import uz.dostonbek.variantapplication.errors.uploadError.ErrorUpload
 import uz.dostonbek.variantapplication.ui.baseFragment.BaseFragment
-import uz.gxteam.variant.utils.AppConstant.ACCEPT
-import uz.gxteam.variant.utils.AppConstant.API_UPLOAD
-import uz.gxteam.variant.utils.AppConstant.AUTH_STR
-import uz.gxteam.variant.utils.AppConstant.DATAAPPLICATION
-import uz.gxteam.variant.utils.AppConstant.DATE_FORMAT
-import uz.gxteam.variant.utils.AppConstant.IMAGE_FORMAT
-import uz.gxteam.variant.utils.AppConstant.ISUPDATE
-import uz.gxteam.variant.utils.AppConstant.PHOTO
-import uz.gxteam.variant.utils.AppConstant.POST
-import uz.gxteam.variant.utils.AppConstant.TOKEN
-import uz.gxteam.variant.utils.AppConstant.TYPE
-import uz.gxteam.variant.utils.AppConstant.TYPETOKEN
-import uz.gxteam.variant.utils.AppConstant.VALUEUPDATE
+import uz.dostonbek.variantapplication.utils.AppConstant.ACCEPT
+import uz.dostonbek.variantapplication.utils.AppConstant.API_UPLOAD
+import uz.dostonbek.variantapplication.utils.AppConstant.AUTH_STR
+import uz.dostonbek.variantapplication.utils.AppConstant.DATAAPPLICATION
+import uz.dostonbek.variantapplication.utils.AppConstant.DATE_FORMAT
+import uz.dostonbek.variantapplication.utils.AppConstant.IMAGE_FORMAT
+import uz.dostonbek.variantapplication.utils.AppConstant.ISUPDATE
+import uz.dostonbek.variantapplication.utils.AppConstant.PHOTO
+import uz.dostonbek.variantapplication.utils.AppConstant.POST
+import uz.dostonbek.variantapplication.utils.AppConstant.TOKEN
+import uz.dostonbek.variantapplication.utils.AppConstant.TYPE
+import uz.dostonbek.variantapplication.utils.AppConstant.TYPETOKEN
+import uz.dostonbek.variantapplication.utils.AppConstant.VALUEUPDATE
 import uz.dostonbek.variantapplication.utils.fetchResult
 import uz.dostonbek.variantapplication.vm.authViewModel.AuthViewModel
 import uz.dostonbek.variantapplication.vm.statementVm.StatementVm
@@ -121,7 +122,8 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
                             compositionRoot.uiControllerApp.error(1001,item.title){ isClick -> }
                         }else{
                             appId = item.id
-                            permissionAndUploadFile()
+                            Log.e("DataClick", appId.toString())
+                           permissionAndUploadFile()
                         }
                     }
                     rvData.adapter = categoryAdapter
@@ -145,8 +147,7 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
                         create.setView(dialogCameraBinding.root)
                         dialogCameraBinding.camera.setOnClickListener {
                             var imageFile = createImageFile()
-                            photoURI = FileProvider.getUriForFile(root.context,
-                                BuildConfig.APPLICATION_ID,imageFile)
+                            photoURI = FileProvider.getUriForFile(root.context, BuildConfig.APPLICATION_ID,imageFile)
                             getTakeImageContent.launch(photoURI)
                             create.dismiss()
                         }
@@ -353,10 +354,11 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
 
 
     fun uploadImage(imagePath:String){
-        launch(Dispatchers.Main) {
+        launch {
             MultipartUploadRequest(context = requireContext(),serverUrl = "${BASE_URL}${API_UPLOAD}")
                 .addHeader(AUTH_STR,"${authViewModel.getSharedPreference().tokenType} ${authViewModel.getSharedPreference().accessToken}")
                 .addHeader(ACCEPT,TYPETOKEN)
+                .addHeader(HttpHeaders.CONTENT_TYPE,TYPETOKEN)
                 .setMethod(POST)
                 .setNotificationConfig { context, uploadId ->
                     UploadNotificationAction(
@@ -409,6 +411,7 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
                             is UploadError -> {
                                 listenerActivity.uploadLoadingHide()
                                 val fromJson = Gson().fromJson(exception.serverResponse.bodyString, ErrorUpload::class.java)
+                                Log.e("ErrorUploadData", fromJson.toString())
                                 messageError(fromJson.errors.message,requireContext())
                             }
                             else -> {}
@@ -459,7 +462,7 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
         launch {
            statementVm.getApplication.fetchResult(compositionRoot.uiControllerApp,{ result->
                result.let {
-                   param3 = DataApplication(param3?.id,param3?.status,param3?.level,it?.client_id?.toLong(), it?.contract_number,it?.photo_status?.toLong(), it?.token.toString(),param3?.status_title, it?.full_name)
+                   param3 = DataApplication(param3?.id?:0,param3?.status,param3?.level,it?.client_id?.toLong(), it?.contract_number,it?.photo_status?.toLong(), it?.token.toString(),param3?.status_title, it?.full_name)
                }
            },{isClick ->  })
         }

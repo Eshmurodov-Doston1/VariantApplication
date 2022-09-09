@@ -1,6 +1,5 @@
 package uz.dostonbek.variantapplication.network.registerApi
 
-import android.service.autofill.UserData
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -9,10 +8,10 @@ import retrofit2.http.POST
 import uz.dostonbek.variantapplication.models.auth.reqAuth.ReqAuth
 import uz.dostonbek.variantapplication.models.auth.resAuth.ResAuth
 import uz.dostonbek.variantapplication.models.logOut.LogOut
-import uz.gxteam.variant.utils.AppConstant.ACCEPT
-import uz.gxteam.variant.utils.AppConstant.AUTH_STR
-import uz.gxteam.variant.utils.AppConstant.HEADER_CONTENT
-import uz.gxteam.variant.utils.AppConstant.TYPETOKEN
+import uz.dostonbek.variantapplication.utils.AppConstant.ACCEPT
+import uz.dostonbek.variantapplication.utils.AppConstant.AUTH_STR
+import uz.dostonbek.variantapplication.utils.AppConstant.HEADER_CONTENT
+import uz.dostonbek.variantapplication.utils.AppConstant.TYPETOKEN
 
 interface AuthService {
     @POST("/api/login")

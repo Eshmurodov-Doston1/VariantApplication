@@ -1,4 +1,6 @@
-package uz.gxteam.variant.errors.uploadError
+package uz.dostonbek.variantapplication.errors.uploadError
+
+import uz.gxteam.variant.errors.uploadError.Errors
 
 data class ErrorUpload(
     val errors: Errors,

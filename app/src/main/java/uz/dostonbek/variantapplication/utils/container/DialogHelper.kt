@@ -1,20 +1,25 @@
 package uz.dostonbek.variantapplication.utils.container
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import uz.dostonbek.variantapplication.R
+import uz.dostonbek.variantapplication.activitys.AuthActivity
+import uz.dostonbek.variantapplication.databinding.DialogParolBinding
 import uz.dostonbek.variantapplication.databinding.ErrorDialogBinding
-import uz.gxteam.variant.utils.AppConstant.CLIENT_CODE_END
-import uz.gxteam.variant.utils.AppConstant.CLIENT_CODE_START
-import uz.gxteam.variant.utils.AppConstant.NO_INTERNET
-import uz.gxteam.variant.utils.AppConstant.SERVER_CODE_END
-import uz.gxteam.variant.utils.AppConstant.SERVER_CODE_START
-import uz.gxteam.variant.utils.AppConstant.UN_AUTHORIZATION
-import uz.gxteam.variant.utils.AppConstant.ZERO
+import uz.dostonbek.variantapplication.utils.AppConstant.CLIENT_CODE_END
+import uz.dostonbek.variantapplication.utils.AppConstant.CLIENT_CODE_START
+import uz.dostonbek.variantapplication.utils.AppConstant.NO_INTERNET
+import uz.dostonbek.variantapplication.utils.AppConstant.SERVER_CODE_END
+import uz.dostonbek.variantapplication.utils.AppConstant.SERVER_CODE_START
+import uz.dostonbek.variantapplication.utils.AppConstant.UN_AUTHORIZATION
+import uz.dostonbek.variantapplication.utils.AppConstant.ZERO
 import uz.dostonbek.variantapplication.utils.gone
+import uz.dostonbek.variantapplication.utils.startNewActivity
 import uz.dostonbek.variantapplication.utils.textApp
 import uz.gxteam.variant.interceptor.MySharedPreference
 
@@ -47,6 +52,9 @@ class DialogHelper(
                 errorDialog.closeBtn.setPadding(ZERO,ZERO,ZERO,ZERO)
                 errorDialog.closeBtn.text = context.getString(R.string.again)
 
+                errorDialog.okBtn.setOnClickListener {
+                    create.dismiss()
+                }
                 errorDialog.closeBtn.setOnClickListener {
                     click.invoke(true)
                     create.dismiss()
@@ -58,6 +66,9 @@ class DialogHelper(
                 errorDialog.okBtn.gone()
                 errorDialog.closeBtn.setPadding(ZERO,ZERO,ZERO,ZERO)
                 errorDialog.closeBtn.text = context.getString(R.string.again)
+                errorDialog.okBtn.setOnClickListener {
+                    create.dismiss()
+                }
                 errorDialog.closeBtn.setOnClickListener {
                     click.invoke(true)
                     create.dismiss()
@@ -77,13 +88,18 @@ class DialogHelper(
                        click.invoke(true)
                        create.dismiss()
                    }
+                   errorDialog.okBtn.setOnClickListener {
+                       create.dismiss()
+                   }
                }else{
-                  navController.navigate(R.id.authFragment)
+                 activity.startNewActivity(AuthActivity::class.java)
+                   activity.finish()
                    mySharedPreferences?.clear()
                }
             }
             UN_AUTHORIZATION->{
-                navController.navigate(R.id.authFragment)
+                activity.startNewActivity(AuthActivity::class.java)
+                activity.finish()
                 mySharedPreferences?.clear()
             }
             in SERVER_CODE_START..SERVER_CODE_END->{
@@ -93,6 +109,9 @@ class DialogHelper(
                 errorDialog.closeBtn.text = context.getString(R.string.again)
                 errorDialog.closeBtn.setOnClickListener {
                     click.invoke(true)
+                    create.dismiss()
+                }
+                errorDialog.okBtn.setOnClickListener {
                     create.dismiss()
                 }
             }
@@ -123,6 +142,25 @@ class DialogHelper(
 
 
 
+
+    fun dialogHelperPassword(
+        onClick:(isClick:Boolean)->Unit
+    ){
+        val alertDialog = AlertDialog.Builder(activity)
+        val create = alertDialog.create()
+        val binding = DialogParolBinding.inflate(activity.layoutInflater)
+        create.setView(binding.root)
+        binding.okBtn.setOnClickListener {
+            onClick(true)
+            create.dismiss()
+        }
+        binding.noBtn.setOnClickListener {
+            onClick(false)
+            create.dismiss()
+        }
+        create.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        create.show()
+    }
 
 
 

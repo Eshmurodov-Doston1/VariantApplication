@@ -13,7 +13,7 @@ import uz.dostonbek.variantapplication.models.getApplications.DataApplication
 import uz.dostonbek.variantapplication.ui.baseFragment.BaseFragment
 import uz.dostonbek.variantapplication.vm.statementVm.StatementVm
 import uz.dostonbek.variantapplication.adapters.chatListAdapter.ChatListAdapter
-import uz.gxteam.variant.utils.AppConstant.DATAAPPLICATION
+import uz.dostonbek.variantapplication.utils.AppConstant.DATAAPPLICATION
 import uz.dostonbek.variantapplication.utils.fetchResult
 
 @AndroidEntryPoint

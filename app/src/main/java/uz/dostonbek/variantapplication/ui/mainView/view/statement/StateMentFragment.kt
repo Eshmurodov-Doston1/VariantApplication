@@ -23,16 +23,16 @@ import uz.dostonbek.variantapplication.socket.dataSocket.DataSocket
 import uz.dostonbek.variantapplication.ui.baseFragment.BaseFragment
 import uz.dostonbek.variantapplication.vm.statementVm.StatementVm
 import uz.dostonbek.variantapplication.adapters.stateMentAdapter.StatementAdapter
-import uz.gxteam.variant.utils.AppConstant.AUTH_WST
-import uz.gxteam.variant.utils.AppConstant.CHAT_APP_STATUS
-import uz.gxteam.variant.utils.AppConstant.DATAAPPLICATION
-import uz.gxteam.variant.utils.AppConstant.NEW_APPLICATION
-import uz.gxteam.variant.utils.AppConstant.PUSHER_WST
-import uz.gxteam.variant.utils.AppConstant.SUBSCRIBE_WST
-import uz.gxteam.variant.utils.AppConstant.WEBSOCKET_URL
-import uz.gxteam.variant.utils.AppConstant.WST_CHANNEL
-import uz.gxteam.variant.utils.AppConstant.WST_DATA
-import uz.gxteam.variant.utils.AppConstant.WST_EVENT
+import uz.dostonbek.variantapplication.utils.AppConstant.AUTH_WST
+import uz.dostonbek.variantapplication.utils.AppConstant.CHAT_APP_STATUS
+import uz.dostonbek.variantapplication.utils.AppConstant.DATAAPPLICATION
+import uz.dostonbek.variantapplication.utils.AppConstant.NEW_APPLICATION
+import uz.dostonbek.variantapplication.utils.AppConstant.PUSHER_WST
+import uz.dostonbek.variantapplication.utils.AppConstant.SUBSCRIBE_WST
+import uz.dostonbek.variantapplication.utils.AppConstant.WEBSOCKET_URL
+import uz.dostonbek.variantapplication.utils.AppConstant.WST_CHANNEL
+import uz.dostonbek.variantapplication.utils.AppConstant.WST_DATA
+import uz.dostonbek.variantapplication.utils.AppConstant.WST_EVENT
 import uz.dostonbek.variantapplication.utils.fetchResult
 import java.util.concurrent.TimeUnit
 
