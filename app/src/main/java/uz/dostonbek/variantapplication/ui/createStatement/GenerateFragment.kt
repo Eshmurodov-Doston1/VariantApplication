@@ -122,7 +122,6 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
                             compositionRoot.uiControllerApp.error(1001,item.title){ isClick -> }
                         }else{
                             appId = item.id
-                            Log.e("DataClick", appId.toString())
                            permissionAndUploadFile()
                         }
                     }

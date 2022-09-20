@@ -18,7 +18,6 @@ import uz.dostonbek.variantapplication.utils.fetchResult
 
 @AndroidEntryPoint
 class ChatListFragment : BaseFragment(R.layout.fragment_chat_list) {
-
     private val binding: FragmentChatListBinding by viewBinding()
     private val statementVM: StatementVm by viewModels()
     lateinit var chatListAdapter: ChatListAdapter
@@ -34,27 +33,26 @@ class ChatListFragment : BaseFragment(R.layout.fragment_chat_list) {
                     findNavController().navigate(R.id.chatFragment,bundle)
                 }
             })
-        }
-    }
 
-
-    override fun onResume() {
-        super.onResume()
-        binding.apply {
             statementVM.getAllApplications()
             launch {
                 statementVM.getAllApplications.fetchResult(compositionRoot.uiControllerApp,{ result->
                     if (result?.data?.isEmpty() == true){
                         animationView.visibility = View.VISIBLE
+                        loadingText.visibility = View.VISIBLE
                         rvStatement.visibility  =View.GONE
                     }else{
                         animationView.visibility = View.GONE
                         rvStatement.visibility  =View.VISIBLE
+                        loadingText.visibility = View.GONE
                         chatListAdapter.submitList(result?.data)
                     }
                     rvStatement.adapter = chatListAdapter
-                },{isClick ->  })
+                },{isClick -> isClick })
             }
         }
     }
+
+
+
 }

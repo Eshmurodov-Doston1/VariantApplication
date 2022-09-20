@@ -42,8 +42,6 @@ class LockFragment : BaseFragment(R.layout.fragment_lock) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             authViewModel.getUserData()
-
-            Log.e("AccessToken", compositionRootAuth.mySharedPreferencesApp.accessToken.toString())
             launch {
                 authViewModel.userData.fetchResult(compositionRootAuth.uiControllerApp,{ result->
                     authViewModel.getSharedPreference().userData = Gson().toJson(result)

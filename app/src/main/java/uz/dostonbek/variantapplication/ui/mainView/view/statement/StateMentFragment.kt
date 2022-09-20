@@ -1,9 +1,11 @@
 package uz.dostonbek.variantapplication.ui.mainView.view.statement
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.viewbinding.library.fragment.viewBinding
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -48,7 +50,7 @@ class StateMentFragment : BaseFragment(R.layout.fragment_state_ment) {
         binding.apply {
             collapsing.setExpandedTitleTextAppearance(R.style.ExpandedAppBar)
             collapsing.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar)
-
+            loadData()
             stateMentAdapter = StatementAdapter(requireContext(),object: StatementAdapter.OnItemClickListener{
                 override fun onItemClick(dataApplication: DataApplication, position: Int) {
                     var bundle = Bundle()
@@ -62,19 +64,20 @@ class StateMentFragment : BaseFragment(R.layout.fragment_state_ment) {
     override fun onResume() {
         super.onResume()
         socket()
-        loadData()
     }
 
    fun loadData() {
        binding.apply {
            statementVm.getAllApplications()
-           launch {
+           lifecycleScope.launch {
                statementVm.getAllApplications.fetchResult(compositionRoot.uiControllerApp,{ result->
-                   if (result?.data?.isEmpty() == true) {
+                   if (result?.data.isNullOrEmpty() || result?.data?.isEmpty() == true) {
                        animationView.visibility = View.VISIBLE
+                       loadingText.visibility = View.VISIBLE
                        rvStatement.visibility = View.GONE
                    } else {
                        animationView.visibility = View.GONE
+                       loadingText.visibility = View.GONE
                        rvStatement.visibility = View.VISIBLE
                        stateMentAdapter.submitList(result?.data)
                    }
@@ -91,14 +94,9 @@ class StateMentFragment : BaseFragment(R.layout.fragment_state_ment) {
 
         val userData = gson.fromJson(statementVm.getShared().userData, UserData::class.java)
         try{
-
-
-
             client = OkHttpClient.Builder().readTimeout(20, TimeUnit.SECONDS)
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .build()
-
-
             val request: okhttp3.Request = okhttp3.Request.Builder().url(WEBSOCKET_URL)
             .build()
             var listener = object:WebSocketListener(){

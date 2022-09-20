@@ -28,6 +28,7 @@
         <activity
             android:name=".activitys.AuthActivity"
             android:exported="true"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout"
             android:theme="@style/Theme.VariantApplication">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

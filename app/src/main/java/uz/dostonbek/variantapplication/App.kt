@@ -20,6 +20,8 @@ class App:Application(),Configuration.Provider{
     }
     @Inject
     lateinit var workerFactory:HiltWorkerFactory
+
+
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
@@ -29,14 +31,14 @@ class App:Application(),Configuration.Provider{
             debug = BuildConfig.DEBUG
         )
     }
+
+
+
     private fun createNotificationChannel() {
+
         if (Build.VERSION.SDK_INT >= 26) {
-            val channel = NotificationChannel(
-                notificationChannelID,
-                TESTCHANNEL,
-                NotificationManager.IMPORTANCE_LOW
-            )
             val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val channel = NotificationChannel(notificationChannelID, TESTCHANNEL, NotificationManager.IMPORTANCE_LOW)
             manager.createNotificationChannel(channel)
         }
     }

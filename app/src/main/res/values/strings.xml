@@ -48,6 +48,8 @@
     <string name="passport_front">Паспорт фронт</string>
     <string name="update_photo">Обновлять</string>
     <string name="save">Сохранять</string>
+    <string name="no_applicaton_list_data">Заявка не найдена</string>
+    <string name="login_text">Продолжит</string>
 
     <array name="dot_colors">
         <item>#03A9F4</item>
