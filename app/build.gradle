@@ -115,4 +115,8 @@ dependencies {
     implementation 'com.github.GrenderG:Toasty:1.5.2'
     //lock View
     implementation 'io.github.itsxtt:pattern-lock:0.2.0'
+    //update application
+    implementation 'com.github.javiersantos:AppUpdater:2.7'
+    // permission
+    implementation 'com.guolindev.permissionx:permissionx:1.6.4'
 }

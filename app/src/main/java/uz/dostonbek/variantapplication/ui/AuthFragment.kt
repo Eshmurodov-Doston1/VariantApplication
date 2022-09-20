@@ -16,16 +16,22 @@ import uz.dostonbek.variantapplication.utils.AppConstant.PHONE_UZB
 import uz.dostonbek.variantapplication.utils.fetchResult
 import uz.dostonbek.variantapplication.vm.authViewModel.AuthViewModel
 
+
 @AndroidEntryPoint
 class AuthFragment : BaseFragment(R.layout.fragment_auth) {
     private val binding: FragmentAuthBinding by viewBinding()
     private val authViewModel: AuthViewModel by viewModels()
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             if (!authViewModel.getSharedPreference().accessToken.equals("") && authViewModel.getSharedPreference().accessToken!=null){
               compositionRootAuth.screenNavigate.createLockView()
             }
+
+
+
             phoneNumber.requestFocus()
 
             phoneNumber.doAfterTextChanged {
@@ -60,4 +66,6 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
                 }
             }
         }
+
+
 }

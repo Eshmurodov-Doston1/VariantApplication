@@ -51,6 +51,13 @@
     <string name="no_applicaton_list_data">Заявка не найдена</string>
     <string name="login_text">Продолжит</string>
 
+
+    <string name="downloading">Downloading…</string>
+    <string name="title_file_download">APK is downloading</string>
+    <string name="storage_access_required">Storage access is required to downloading the file.</string>
+    <string name="storage_permission_denied">Storage permission request was denied.</string>
+    <string name="ok_">OK</string>
+
     <array name="dot_colors">
         <item>#03A9F4</item>
         <item>#E65100</item>
