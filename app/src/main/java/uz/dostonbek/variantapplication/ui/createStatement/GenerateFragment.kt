@@ -393,11 +393,11 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
                 .subscribe(requireContext(),viewLifecycleOwner, delegate = object:
                     RequestObserverDelegate {
                     override fun onCompleted(context: Context, uploadInfo: UploadInfo) {
-
+                        listenerActivity.uploadLoadingShow()
                     }
                     @SuppressLint("LongLogTag")
                     override fun onCompletedWhileNotObserving() {
-                        listenerActivity.uploadLoadingShow()
+
                     }
 
                     override fun onError(
