@@ -29,11 +29,7 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
             if (!authViewModel.getSharedPreference().accessToken.equals("") && authViewModel.getSharedPreference().accessToken!=null){
               compositionRootAuth.screenNavigate.createLockView()
             }
-
-
-
             phoneNumber.requestFocus()
-
             phoneNumber.doAfterTextChanged {
                 if (it.toString().trim().length==9){
                     password.requestFocus()

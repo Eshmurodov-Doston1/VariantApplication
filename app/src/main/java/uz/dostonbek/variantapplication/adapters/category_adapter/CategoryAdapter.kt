@@ -5,16 +5,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uz.dostonbek.variantapplication.databinding.ItemCreateRequestBinding
 import uz.dostonbek.variantapplication.models.uploaCategory.UploadCategoryItem
+import uz.dostonbek.variantapplication.models.uploadPhotos.UploadPhotos
+import uz.dostonbek.variantapplication.utils.visible
 
-class CategoryAdapter(var listCategory:ArrayList<UploadCategoryItem>, private val onClick:(item: UploadCategoryItem, position:Int)->Unit):RecyclerView.Adapter<CategoryAdapter.Vh>() {
+class CategoryAdapter(
+    var listCategory:ArrayList<UploadCategoryItem>,
+    private val onItemClickListener: OnItemClickListener)
+    :RecyclerView.Adapter<CategoryAdapter.Vh>() {
     inner class Vh(var itemCreateRequestBinding: ItemCreateRequestBinding):RecyclerView.ViewHolder(itemCreateRequestBinding.root){
         fun onBind(uploadCategoryItem: UploadCategoryItem, position: Int){
             itemCreateRequestBinding.title.text = uploadCategoryItem.title
+            if(uploadCategoryItem.is_uploaded==1){
+                itemCreateRequestBinding.checkIcon.visible()
+            }
             itemCreateRequestBinding.card.setOnClickListener {
                 if (uploadCategoryItem.is_uploaded!=1){
-                    onClick.invoke(uploadCategoryItem,position)
+                    onItemClickListener.onItemClick(uploadCategoryItem,position)
                 }else{
-                    onClick.invoke(UploadCategoryItem(-2,-2,1,"Этот раздел уже загружен"),position)
+                    onItemClickListener.onItemClick(UploadCategoryItem(-2,-2,1,"Этот раздел уже загружен"),position)
                 }
             }
         }
@@ -30,5 +38,10 @@ class CategoryAdapter(var listCategory:ArrayList<UploadCategoryItem>, private va
 
     override fun getItemCount(): Int {
      return listCategory.size
+    }
+
+
+    interface OnItemClickListener{
+        fun onItemClick(item: UploadCategoryItem, position:Int)
     }
 }

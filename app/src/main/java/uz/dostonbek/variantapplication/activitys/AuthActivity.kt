@@ -44,7 +44,7 @@ class AuthActivity : AppCompatActivity(),UiController,CoroutineScope, ListenerAc
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        updateApplicationVersion()
+//        updateApplicationVersion()
         window.statusBarColor = ContextCompat.getColor(this, R.color.background)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_auth) as NavHostFragment
@@ -56,59 +56,64 @@ class AuthActivity : AppCompatActivity(),UiController,CoroutineScope, ListenerAc
 
     private fun updateApplicationVersion() {
         PermissionX.init(this)
-            .permissions(Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .onExplainRequestReason { scope, deniedList ->
                 scope.showRequestReasonDialog(deniedList, "Пожалуйста, разрешите, иначе мы не сможем вам помочь", "OK", "Cancel")
             }.request { allGranted, grantedList, deniedList ->
                 if (allGranted) {
                     val downloadController = DownloadController(this)
                     downloadController.enqueueDownload(updateUrl)
-                    //all permissions already granted or just granted
-                    val appUpdaterUtils = AppUpdaterUtils(this)
-                        .setUpdateJSON(updateUrl)
-                        .setUpdateFrom(UpdateFrom.JSON)
-                        .withListener(object: AppUpdaterUtils.UpdateListener{
-                            override fun onSuccess(update: Update?, isUpdateAvailable: Boolean?) {
-                                Log.e("Latest Version", update!!.latestVersion)
-                                Log.e("Latest Version Code", update.latestVersionCode.toString())
-                                Log.e("Release notes", update.releaseNotes)
-                                Log.e("URL", update.urlToDownload.toString())
-                                Log.e("Is update available?", isUpdateAvailable.toString())
-
-
-                                if (isUpdateAvailable == true) {
-                                    val alertDialog = AlertDialog.Builder(this@AuthActivity)
-                                    alertDialog.setTitle("Новая версия! " + update.latestVersion)
-                                    alertDialog.setMessage(update.releaseNotes)
-                                    alertDialog.setPositiveButton("Продолжить") { dialog: DialogInterface?, which: Int ->
-                                        val atualizaApp = UpdateApp()
-                                        atualizaApp.setContext(this@AuthActivity)
-                                        atualizaApp.execute(update.urlToDownload.toString())
-                                    }
-                                    alertDialog.setNegativeButton("Отменить") { dialog: DialogInterface, which: Int ->
-                                        // splashPresenter.getCurrentAuth()
-                                        dialog.cancel()
-                                    }
-                                    alertDialog.show()
-                                } else {
-                                    // splashPresenter.getCurrentAuth()
-                                }
-                            }
-
-                            override fun onFailed(error: AppUpdaterError?) {
-                                Toast.makeText(this@AuthActivity, R.string.no_internet, Toast.LENGTH_LONG).show()
-                                Log.e("AppUpdater Error", "Something went wrong")
-                            }
-
-                        })
-                    appUpdaterUtils.start()
+                  updataApp()
                 } else {
                     startActivity(
                         Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package",packageName, null))
                     )
                 }
             }
+    }
 
+
+
+    fun updataApp(){
+        //all permissions already granted or just granted
+        val appUpdaterUtils = AppUpdaterUtils(this)
+            .setUpdateJSON(updateUrl)
+            .setUpdateFrom(UpdateFrom.JSON)
+            .withListener(object: AppUpdaterUtils.UpdateListener{
+                override fun onSuccess(update: Update?, isUpdateAvailable: Boolean?) {
+                    Log.e("Latest Version", update!!.latestVersion)
+                    Log.e("Latest Version Code", update.latestVersionCode.toString())
+                    Log.e("Release notes", update.releaseNotes)
+                    Log.e("URL", update.urlToDownload.toString())
+                    Log.e("Is update available?", isUpdateAvailable.toString())
+
+
+                    if (isUpdateAvailable == true) {
+                        val alertDialog = AlertDialog.Builder(this@AuthActivity)
+                        alertDialog.setTitle("Новая версия! " + update.latestVersion)
+                        alertDialog.setMessage(update.releaseNotes)
+                        alertDialog.setPositiveButton("Продолжить") { dialog: DialogInterface?, which: Int ->
+                            val atualizaApp = UpdateApp()
+                            atualizaApp.setContext(this@AuthActivity)
+                            atualizaApp.execute(update.urlToDownload.toString())
+                        }
+                        alertDialog.setNegativeButton("Отменить") { dialog: DialogInterface, which: Int ->
+                            // splashPresenter.getCurrentAuth()
+                            dialog.cancel()
+                        }
+                        alertDialog.show()
+                    } else {
+                        // splashPresenter.getCurrentAuth()
+                    }
+                }
+
+                override fun onFailed(error: AppUpdaterError?) {
+                    Toast.makeText(this@AuthActivity, R.string.no_internet, Toast.LENGTH_LONG).show()
+                    Log.e("AppUpdater Error", "Something went wrong")
+                }
+
+            })
+        appUpdaterUtils.start()
     }
 
 

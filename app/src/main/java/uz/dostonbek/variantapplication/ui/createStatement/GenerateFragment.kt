@@ -117,14 +117,16 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
             statementVm.getUploadCategory((param3?.id?:0L).toInt())
             launch {
                 statementVm.getUploadCategory.fetchResult(compositionRoot.uiControllerApp,{ result->
-                    categoryAdapter = CategoryAdapter((result?: emptyList()) as ArrayList<UploadCategoryItem>){ item, position ->
-                        if(item.is_uploaded==1){
-                            compositionRoot.uiControllerApp.error(1001,item.title){ isClick -> }
-                        }else{
-                            appId = item.id
-                           permissionAndUploadFile()
+                    categoryAdapter = CategoryAdapter((result?: emptyList()) as ArrayList<UploadCategoryItem>,object:CategoryAdapter.OnItemClickListener{
+                        override fun onItemClick(item: UploadCategoryItem, position: Int) {
+                            if(item.is_uploaded==1){
+                                compositionRoot.uiControllerApp.error(1001,item.title){ isClick -> }
+                            }else{
+                                permissionAndUploadFile()
+                                appId = item.id
+                            }
                         }
-                    }
+                    })
                     rvData.adapter = categoryAdapter
                 },{isClick ->  })
             }
@@ -433,6 +435,7 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
                             clearMyFiles()
                             getApplicationData()
                             loadViewUpload()
+                            dataCategory()
                         }
                     }
 
