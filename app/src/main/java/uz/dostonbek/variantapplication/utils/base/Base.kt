@@ -1,5 +1,6 @@
 package uz.dostonbek.variantapplication.utils.base
 
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -37,15 +38,21 @@ interface ResponseFetcher{
           return try {
                val jsonObject = JSONObject(response?.errorBody()?.string().toString())
               var errorMessage = ""
+              Log.e("JsonData", jsonObject.toString() )
               if (jsonObject.has("errors")){
-                  val jsonArray = jsonObject.getJSONArray("errors")
-                  if (jsonArray.length()==1){
-                      errorMessage = jsonArray.getJSONObject(0).get("message").toString()
+                  if (jsonObject.getJSONObject("errors").has("message")){
+                      errorMessage = jsonObject.getJSONObject("errors").get("message").toString()
                   }else{
-                      (0..jsonArray.length()).onEach {
-                          errorMessage += jsonArray.getJSONObject(it).get("message").toString()
+                      val jsonArray = jsonObject.getJSONArray("errors")
+                      if (jsonArray.length()==1){
+                          errorMessage = jsonArray.getJSONObject(0).get("message").toString()
+                      }else{
+                          (0..jsonArray.length()).onEach {
+                              errorMessage += jsonArray.getJSONObject(it).get("message").toString()
+                          }
                       }
                   }
+
               }else if(jsonObject.has("message")) {
                   errorMessage = jsonObject.get("message").toString()
               }

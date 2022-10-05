@@ -83,7 +83,6 @@ class MainActivity : AppCompatActivity(), ListenerActivity, CoroutineScope, UiCo
     }
 
     override fun hideProgress() {
-        Log.e("HideProgressData", "hideProgress: ", )
         appCompositionRoot.loadingView(false)
     }
 

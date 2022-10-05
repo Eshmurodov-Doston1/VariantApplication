@@ -97,8 +97,8 @@ class StateMentFragment : BaseFragment(R.layout.fragment_state_ment) {
             client = OkHttpClient.Builder().readTimeout(20, TimeUnit.SECONDS)
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .build()
-            val request: okhttp3.Request = okhttp3.Request.Builder().url(WEBSOCKET_URL)
-            .build()
+            val request: okhttp3.Request = okhttp3.Request.Builder().url(WEBSOCKET_URL).build()
+
             var listener = object:WebSocketListener(){
                 override fun onOpen(webSocket: WebSocket, response: Response) {
                     super.onOpen(webSocket, response)
@@ -110,6 +110,7 @@ class StateMentFragment : BaseFragment(R.layout.fragment_state_ment) {
 
                 override fun onMessage(webSocket: WebSocket, text: String) {
                     super.onMessage(webSocket, text)
+                    Log.e("DataSocket", text)
                     val j = gson.fromJson(text, JsonObject::class.java)
 
                     if (j.has(WST_EVENT) && j.has(WST_DATA)){
