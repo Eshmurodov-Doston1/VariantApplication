@@ -17,10 +17,12 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.common.net.HttpHeaders
 import com.google.gson.Gson
 import com.permissionx.guolindev.PermissionX
 import dagger.hilt.android.AndroidEntryPoint
+import id.zelory.compressor.Compressor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.gotev.uploadservice.UploadServiceConfig
@@ -37,18 +39,18 @@ import net.gotev.uploadservice.protocols.multipart.MultipartUploadRequest
 import uz.dostonbek.variantapplication.BuildConfig
 import uz.dostonbek.variantapplication.BuildConfig.BASE_URL
 import uz.dostonbek.variantapplication.R
+import uz.dostonbek.variantapplication.adapters.category_adapter.CategoryAdapter
+import uz.dostonbek.variantapplication.adapters.imageViewPagerAdapter.ViewPagerAdapter
 import uz.dostonbek.variantapplication.adapters.uploadAdapter.UploadAdapter
 import uz.dostonbek.variantapplication.databinding.CreateDocumentBinding
 import uz.dostonbek.variantapplication.databinding.DialogCameraBinding
 import uz.dostonbek.variantapplication.databinding.ErrorDialogBinding
 import uz.dostonbek.variantapplication.databinding.ImageDialogBinding
+import uz.dostonbek.variantapplication.errors.uploadError.ErrorUpload
 import uz.dostonbek.variantapplication.models.getApplication.reqApplication.SendToken
 import uz.dostonbek.variantapplication.models.getApplications.DataApplication
 import uz.dostonbek.variantapplication.models.uploaCategory.UploadCategoryItem
 import uz.dostonbek.variantapplication.models.uploadPhotos.UploadPhotos
-import uz.dostonbek.variantapplication.adapters.category_adapter.CategoryAdapter
-import uz.dostonbek.variantapplication.adapters.imageViewPagerAdapter.ViewPagerAdapter
-import uz.dostonbek.variantapplication.errors.uploadError.ErrorUpload
 import uz.dostonbek.variantapplication.ui.baseFragment.BaseFragment
 import uz.dostonbek.variantapplication.utils.AppConstant.ACCEPT
 import uz.dostonbek.variantapplication.utils.AppConstant.API_UPLOAD
@@ -71,7 +73,6 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.math.abs
 
 
@@ -281,9 +282,14 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
             openInputStream?.copyTo(fileoutputStream)
             openInputStream?.close()
             fileoutputStream.close()
-            var filAbsolutePath = file.absolutePath
-            imagePath = filAbsolutePath
-            uploadImage(imagePath)
+            lifecycleScope.launchWhenCreated {
+                Compressor.compress(requireContext(), file).apply {
+                    Log.e("CompressorSize",(this.length()/1024).toString())
+                    var filAbsolutePath = this.absolutePath
+                    imagePath = filAbsolutePath
+                    uploadImage(imagePath)
+                }
+            }
         }
     }
 
@@ -299,9 +305,14 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
             openInputStream?.copyTo(fileoutputStream)
             openInputStream?.close()
             fileoutputStream.close()
-            var filAbsolutePath = file.absolutePath
-            imagePath = filAbsolutePath
-            updateImage(imagePath)
+            lifecycleScope.launchWhenCreated {
+                Compressor.compress(requireContext(), file).apply {
+                    Log.e("CompressorSize",(this.length()/1024).toString())
+                    var filAbsolutePath = this.absolutePath
+                    imagePath = filAbsolutePath
+                    updateImage(imagePath)
+                }
+            }
         }
     }
 
@@ -328,9 +339,14 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
         openInputStream!!.copyTo(fileOutputStream)
         openInputStream.close()
         fileOutputStream.close()
-        var filAbsolutePath = file.absolutePath
-        imagePath = filAbsolutePath
-        uploadImage(imagePath)
+        lifecycleScope.launchWhenCreated {
+            Compressor.compress(requireContext(), file).apply {
+                Log.e("CompressorSize",(this.length()/1024).toString())
+                var filAbsolutePath = this.absolutePath
+                imagePath = filAbsolutePath
+                updateImage(imagePath)
+            }
+        }
     }
 
     //Gallery Update
@@ -348,9 +364,14 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
         openInputStream!!.copyTo(fileOutputStream)
         openInputStream.close()
         fileOutputStream.close()
-        var filAbsolutePath = file.absolutePath
-        imagePath = filAbsolutePath
-        updateImage(imagePath)
+        lifecycleScope.launchWhenCreated {
+            Compressor.compress(requireContext(), file).apply {
+                Log.e("CompressorSize",(this.length()/1024).toString())
+                var filAbsolutePath = this.absolutePath
+                imagePath = filAbsolutePath
+                updateImage(imagePath)
+            }
+        }
     }
 
 
@@ -405,6 +426,8 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
                         uploadInfo: UploadInfo,
                         exception: Throwable
                     ) {
+                        Log.e("ErrorUploadData", exception.localizedMessage.toString())
+                        listenerActivity.uploadLoadingHide()
                         when (exception) {
                             is UserCancelledUploadException -> {
                                 Toast.makeText(requireContext(), "Xatolik:${exception.message}", Toast.LENGTH_SHORT).show()
@@ -412,7 +435,7 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
                             is UploadError -> {
                                 listenerActivity.uploadLoadingHide()
                                 val fromJson = Gson().fromJson(exception.serverResponse.bodyString, ErrorUpload::class.java)
-                                Log.e("ErrorUploadData", fromJson.toString())
+                                Log.e("ErrorUploadData", exception.serverResponse.bodyString)
                                 messageError(fromJson.errors.message,requireContext())
                             }
                             else -> {}

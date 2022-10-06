@@ -1,7 +1,7 @@
 package uz.dostonbek.variantapplication.utils
 
 object AppConstant {
-    const val WEBSOCKET_URL = "ws://socket.variant.uz:6060/app/mykey?protocol=7&client=js&version=7.0.6&flash=false"
+    const val WEBSOCKET_URL = "wss://admin.variant.uz:6001/app/mykey?protocol=7&client=js&version=7.0.6&flash=false"
  //wss://admin.variant.uz/app/mykey?protocol=7&client=js&version=7.0.6&flash=false
     const val PORT_SERVER = "6060"
     const val NEW_APPLICATION = "private-getChatNewApp"

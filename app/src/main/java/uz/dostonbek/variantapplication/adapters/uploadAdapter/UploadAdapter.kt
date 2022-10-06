@@ -1,5 +1,6 @@
 package uz.dostonbek.variantapplication.adapters.uploadAdapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -16,6 +17,7 @@ class UploadAdapter(var onItemLongClick: OnIemLongClick):ListAdapter<UploadPhoto
 ) {
     inner class Vh(var itemUploadBinding: ItemUploadBinding):RecyclerView.ViewHolder(itemUploadBinding.root){
         fun onBind(uploadPhotos: UploadPhotos,position: Int){
+            Log.e("LinkData", "$BASE_URL/${uploadPhotos.file_link}" )
             itemUploadBinding.image.load("$BASE_URL/${uploadPhotos.file_link}"){
                 crossfade(true)
                 crossfade(400)

@@ -121,4 +121,6 @@ dependencies {
     implementation 'com.github.javiersantos:AppUpdater:2.7'
     // permission
     implementation 'com.guolindev.permissionx:permissionx:1.6.4'
+    //resizer
+    implementation 'id.zelory:compressor:3.0.1'
 }
