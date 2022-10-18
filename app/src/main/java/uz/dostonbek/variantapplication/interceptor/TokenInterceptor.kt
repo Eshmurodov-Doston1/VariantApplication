@@ -50,7 +50,6 @@ class TokenInterceptor @Inject constructor(
                     mySharedPreference.accessToken = resAuth.access_token
                     mySharedPreference.refreshToken = resAuth.refresh_token
                     mySharedPreference.tokenType = resAuth.token_type
-                    Log.e("ResponseData", resAuth.toString())
                     modifiedRequest = oldRequest.newBuilder()
                         .header(HttpHeaders.AUTHORIZATION, "${mySharedPreference.tokenType} ${mySharedPreference.accessToken}")
                         .build()

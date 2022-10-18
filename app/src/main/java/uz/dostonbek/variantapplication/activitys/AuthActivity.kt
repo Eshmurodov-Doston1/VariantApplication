@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -13,6 +12,7 @@ import android.viewbinding.library.activity.viewBinding
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
@@ -34,6 +34,7 @@ import uz.dostonbek.variantapplication.utils.container.AppCompositionRoot
 import uz.dostonbek.variantapplication.utils.uiController.UiController
 import uz.dostonbek.variantapplication.vm.authViewModel.AuthViewModel
 import kotlin.coroutines.CoroutineContext
+
 @AndroidEntryPoint
 class AuthActivity : AppCompatActivity(),UiController,CoroutineScope, ListenerActivity {
     private val binding:ActivityAuthBinding  by viewBinding()
@@ -43,7 +44,6 @@ class AuthActivity : AppCompatActivity(),UiController,CoroutineScope, ListenerAc
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
 //        updateApplicationVersion()
         window.statusBarColor = ContextCompat.getColor(this, R.color.background)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR

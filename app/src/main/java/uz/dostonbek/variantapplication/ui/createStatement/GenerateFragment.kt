@@ -36,6 +36,7 @@ import net.gotev.uploadservice.extensions.getCancelUploadIntent
 import net.gotev.uploadservice.network.ServerResponse
 import net.gotev.uploadservice.observer.request.RequestObserverDelegate
 import net.gotev.uploadservice.protocols.multipart.MultipartUploadRequest
+import org.json.JSONObject
 import uz.dostonbek.variantapplication.BuildConfig
 import uz.dostonbek.variantapplication.BuildConfig.BASE_URL
 import uz.dostonbek.variantapplication.R
@@ -106,7 +107,6 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
             swipeRefresh.setOnRefreshListener {
                 loadViewUpload()
             }
-
             loadViewUpload()
         }
     }
@@ -143,12 +143,12 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
                     scope.showRequestReasonDialog(deniedList, getString(R.string.no_help), "OK", getString(R.string.cancel))
                 }.request { allGranted, grantedList, deniedList ->
                     if (allGranted) {
-                        var dialog = AlertDialog.Builder(requireContext(),R.style.BottomSheetDialogThem)
+                        val dialog = AlertDialog.Builder(requireContext(),R.style.BottomSheetDialogThem)
                         val create = dialog.create()
                         val dialogCameraBinding = DialogCameraBinding.inflate(LayoutInflater.from(requireContext()), null, false)
                         create.setView(dialogCameraBinding.root)
                         dialogCameraBinding.camera.setOnClickListener {
-                            var imageFile = createImageFile()
+                            val imageFile = createImageFile()
                             photoURI = FileProvider.getUriForFile(root.context, BuildConfig.APPLICATION_ID,imageFile)
                             getTakeImageContent.launch(photoURI)
                             create.dismiss()
@@ -199,9 +199,9 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
                     uploadPhotos: UploadPhotos,
                     position: Int
                 ) {
-                    var alertDialog = AlertDialog.Builder(requireContext(),R.style.BottomSheetDialogThem)
+                    val alertDialog = AlertDialog.Builder(requireContext(),R.style.BottomSheetDialogThem)
                     val create = alertDialog.create()
-                    var imageDialogBinding = ImageDialogBinding.inflate(LayoutInflater.from(requireContext()),null,false)
+                    val imageDialogBinding = ImageDialogBinding.inflate(LayoutInflater.from(requireContext()),null,false)
                     create.setView(imageDialogBinding.root)
                     viewPagerAdapter = ViewPagerAdapter(object: ViewPagerAdapter.OnItemClickListener{
                         override fun onItemClickUpdate(
@@ -213,13 +213,13 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
                                 .onExplainRequestReason { scope, deniedList ->
                                     scope.showRequestReasonDialog(deniedList, getString(R.string.no_help), "OK", getString(R.string.cancel))
                                 }.request { allGranted, grantedList, deniedList ->
-                                    var dialogApp = AlertDialog.Builder(requireContext(),R.style.BottomSheetDialogThem)
+                                    val dialogApp = AlertDialog.Builder(requireContext(),R.style.BottomSheetDialogThem)
                                     val create1 = dialogApp.create()
-                                    var cameraDialogBinding = DialogCameraBinding.inflate(LayoutInflater.from(requireContext()),null,false)
+                                    val cameraDialogBinding = DialogCameraBinding.inflate(LayoutInflater.from(requireContext()),null,false)
                                     create1.setView(cameraDialogBinding.root)
                                     uploadPhotosApp = uploadPhotos
                                     cameraDialogBinding.camera.setOnClickListener {
-                                        var imageFile = createImageFile()
+                                        val imageFile = createImageFile()
                                         photoURI = FileProvider.getUriForFile(requireContext(),BuildConfig.APPLICATION_ID,imageFile)
                                         getTakeImageContentUpdate.launch(photoURI)
                                         create1.dismiss()
@@ -273,18 +273,17 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
     //Camera Upload
     private val getTakeImageContent = registerForActivityResult(ActivityResultContracts.TakePicture()) {
         if (it) {
-            var openInputStream = activity?.contentResolver?.openInputStream(photoURI)
+            val openInputStream = activity?.contentResolver?.openInputStream(photoURI)
 
-            var format = SimpleDateFormat(DATE_FORMAT,Locale.getDefault()).format(Date())
-            var file = File(activity?.filesDir, "$format.jpg")
+            val format = SimpleDateFormat(DATE_FORMAT,Locale.getDefault()).format(Date())
+            val file = File(activity?.filesDir, "$format.jpg")
 
-            var fileoutputStream = FileOutputStream(file)
+            val fileoutputStream = FileOutputStream(file)
             openInputStream?.copyTo(fileoutputStream)
             openInputStream?.close()
             fileoutputStream.close()
             lifecycleScope.launchWhenCreated {
                 Compressor.compress(requireContext(), file).apply {
-                    Log.e("CompressorSize",(this.length()/1024).toString())
                     var filAbsolutePath = this.absolutePath
                     imagePath = filAbsolutePath
                     uploadImage(imagePath)
@@ -296,18 +295,17 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
 
     private val getTakeImageContentUpdate = registerForActivityResult(ActivityResultContracts.TakePicture()) {
         if (it) {
-            var openInputStream = activity?.contentResolver?.openInputStream(photoURI)
+            val openInputStream = activity?.contentResolver?.openInputStream(photoURI)
 
-            var format = SimpleDateFormat(DATE_FORMAT,Locale.getDefault()).format(Date())
-            var file = File(activity?.filesDir, "$format$IMAGE_FORMAT")
+            val format = SimpleDateFormat(DATE_FORMAT,Locale.getDefault()).format(Date())
+            val file = File(activity?.filesDir, "$format$IMAGE_FORMAT")
 
-            var fileoutputStream = FileOutputStream(file)
+            val fileoutputStream = FileOutputStream(file)
             openInputStream?.copyTo(fileoutputStream)
             openInputStream?.close()
             fileoutputStream.close()
             lifecycleScope.launchWhenCreated {
                 Compressor.compress(requireContext(), file).apply {
-                    Log.e("CompressorSize",(this.length()/1024).toString())
                     var filAbsolutePath = this.absolutePath
                     imagePath = filAbsolutePath
                     updateImage(imagePath)
@@ -331,20 +329,19 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
 
     private var getImageContent = registerForActivityResult(ActivityResultContracts.GetContent()){ uri->
         uri?:return@registerForActivityResult
-        var openInputStream =(activity)?.contentResolver?.openInputStream(uri)
-        var filesDir = (activity)?.filesDir
-        var format = SimpleDateFormat(DATE_FORMAT,Locale.getDefault()).format(Date())
-        var file = File(filesDir,"$format$IMAGE_FORMAT")
+        val openInputStream =(activity)?.contentResolver?.openInputStream(uri)
+        val filesDir = (activity)?.filesDir
+        val format = SimpleDateFormat(DATE_FORMAT,Locale.getDefault()).format(Date())
+        val file = File(filesDir,"$format$IMAGE_FORMAT")
         val fileOutputStream = FileOutputStream(file)
         openInputStream!!.copyTo(fileOutputStream)
         openInputStream.close()
         fileOutputStream.close()
         lifecycleScope.launchWhenCreated {
             Compressor.compress(requireContext(), file).apply {
-                Log.e("CompressorSize",(this.length()/1024).toString())
                 var filAbsolutePath = this.absolutePath
                 imagePath = filAbsolutePath
-                updateImage(imagePath)
+                uploadImage(imagePath)
             }
         }
     }
@@ -356,17 +353,16 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
 
     private var getImageContentUpdate = registerForActivityResult(ActivityResultContracts.GetContent()){ uri->
         uri?:return@registerForActivityResult
-        var openInputStream =(activity)?.contentResolver?.openInputStream(uri)
-        var filesDir = (activity)?.filesDir
-        var format = SimpleDateFormat(DATE_FORMAT,Locale.getDefault()).format(Date())
-        var file = File(filesDir,"$format$IMAGE_FORMAT")
+        val openInputStream =(activity)?.contentResolver?.openInputStream(uri)
+        val filesDir = (activity)?.filesDir
+        val format = SimpleDateFormat(DATE_FORMAT,Locale.getDefault()).format(Date())
+        val file = File(filesDir,"$format$IMAGE_FORMAT")
         val fileOutputStream = FileOutputStream(file)
         openInputStream!!.copyTo(fileOutputStream)
         openInputStream.close()
         fileOutputStream.close()
         lifecycleScope.launchWhenCreated {
             Compressor.compress(requireContext(), file).apply {
-                Log.e("CompressorSize",(this.length()/1024).toString())
                 var filAbsolutePath = this.absolutePath
                 imagePath = filAbsolutePath
                 updateImage(imagePath)
@@ -426,7 +422,6 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
                         uploadInfo: UploadInfo,
                         exception: Throwable
                     ) {
-                        Log.e("ErrorUploadData", exception.localizedMessage.toString())
                         listenerActivity.uploadLoadingHide()
                         when (exception) {
                             is UserCancelledUploadException -> {
@@ -435,7 +430,6 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
                             is UploadError -> {
                                 listenerActivity.uploadLoadingHide()
                                 val fromJson = Gson().fromJson(exception.serverResponse.bodyString, ErrorUpload::class.java)
-                                Log.e("ErrorUploadData", exception.serverResponse.bodyString)
                                 messageError(fromJson.errors.message,requireContext())
                             }
                             else -> {}
@@ -553,8 +547,16 @@ class GenerateFragment : BaseFragment(R.layout.create_document) {
                             }
                             is UploadError -> {
                                 listenerActivity.uploadLoadingHide()
-                                val fromJson = Gson().fromJson(exception.serverResponse.bodyString, ErrorUpload::class.java)
-                                messageError(fromJson.errors.message,requireContext())
+                                var errorMessage = ""
+                                val jsonObject = JSONObject(exception.serverResponse.bodyString)
+                                if(jsonObject.has("errors")){
+                                    val jsonArray = jsonObject.getJSONArray("errors")
+                                    for (i in 0 until jsonArray.length()){
+                                        errorMessage += ("${jsonArray.getJSONObject(i).get("message")} \n")
+                                    }
+                                }
+                               // val fromJson = Gson().fromJson(exception.serverResponse.bodyString, ErrorUpload::class.java)
+                                messageError(errorMessage,requireContext())
 
                             }
                             else -> {}
